@@ -3,6 +3,7 @@ using InAndOut.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -63,7 +64,7 @@ namespace InAndOut.Controllers
 
     // This was updated from:
     // https://stackoverflow.com/questions/51705732/jquery-datatable-ajax-no-data-available-mvc
-    public IActionResult GetItems()
+    public IActionResult GetItems02()
     {
       var items = new List<Item>
          {
@@ -91,6 +92,12 @@ namespace InAndOut.Controllers
       // My error seems to be in the JavaScript
       // Need to look at C:\Users\jwright\source\repos\InAndOut\InAndOut\wwwroot\js\items03.js getAllMessages method
       return Json(new { data = items });
+    }
+
+    public IActionResult GetItems()
+    {
+      List<Item> objList = _db.Items.ToList();
+      return Json(new { data = objList });
     }
   }
 }

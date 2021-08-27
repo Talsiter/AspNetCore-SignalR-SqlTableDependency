@@ -51,13 +51,49 @@ namespace InAndOut
     //  await Clients.All.SendAsync("ReceiveMessage", user, message);
     //}
 
-    public async Task SendMessage(string user, string message)
+    public async Task SendMessage01(string user, string message)
     {
-      await Clients.All.SendAsync("ReceiveMessage", user, message);
+      // This sends a message to all the clients
+      // I expect the JavaScript in items##.cs to get this message on the
+      // connection.on("ReceiveMessage") funtion
+      // await Clients.All.SendAsync("ReceiveMessage", user, message);
+      try
+      {
+        await Clients.All.SendAsync("ReceiveMessage");
+
+      }
+      catch (System.Exception ex)
+      {
+        var t = ex.Message;
+        throw;
+      }
     }
 
+    public async Task SendMessage02(string user, string message)
+    {
+      try
+      {
+        await Clients.All.SendAsync("ReceiveMessage");
+      }
+      catch (System.Exception ex)
+      {
+        var t = ex.Message;
+        throw;
+      }
+    }
 
-
+    public void SendMessage(string user, string message)
+    {
+      try
+      {
+        Clients.All.SendAsync("ReceiveMessage");
+      }
+      catch (System.Exception ex)
+      {
+        var t = ex.Message;
+        throw;
+      }
+    }
 
   }
 }
