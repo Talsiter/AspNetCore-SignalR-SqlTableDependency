@@ -34,53 +34,60 @@ connection.start().then(function () {
 //  event.preventDefault();
 //});
 
-// This gives me an error:
-//DataTables warning: table id=myTable - Requested unknown parameter 'ItemName' for row 0, column 1.
+
+
+
+
+// This is from:
+//https://stackoverflow.com/questions/51764211/jquery-datatable-loading-using-ajax-asp-net-mvc
+// Does Not Display any data
 function getAllMessages() {
-
   $('#myTable').DataTable({
-    stateSave: true,
-    destroy: true,
-    "processing": true,
-    "language": {
-      "processing": "DataTables is currently busy"
-    },
-    "ajax": {
+    processing: true,
+    serverSide: false,
+    ordering: true,
+    paging: true,
+    searching: true,
+    columns: [
+      { title: "Id" },
+      { title: "ItemName" },
+      { title: "Borrower" },
+      { title: "Lender" },
+      { title: "View Data" }
+    ],
+    columns: [
+      { data: "Id" },
+      { data: "ItemName" },
+      { data: "Borrower" },
+      { data: "Lender" },
+      {
+        data: null,
+        defaultContent: "<button class='tblview'>View Id</button><button class='tblDelete'>Delete</button>"
+      }
+    ],
+    ajax: {
       "url": "/Item/GetItems",
-      "data": "JSON.stringify(PersonDetail)",
       "type": "GET",
-      "datatype": "json"
+      "dataSrc": ''
     },
-    "columns": [
+    "columnDefs": [
       {
-        "data": null,
-        "defaultContent": "<a href='#' class='btn btn-block bg-gradient-primary btn-xs' onclick='DetailsAction(this)'>Details</a>"
-      },
-      { "data": "ItemName", "autoWidth": true },
-      { "data": "Borrower", "autoWidth": true },
-      { "data": "Lender", "autoWidth": true },
+        "targets": 0,
+        "visible": false
+      }
     ]
   });
 }
 
-// This gives me an error:
-// DataTables warning: table id=myTable - Requested unknown parameter 'ItemName' for row 0, column 1
+// This is just after many modifications however, this does not display any data
 function getAllMessages02() {
-
   $('#myTable').DataTable({
-    stateSave: true,
-    destroy: true,
-    "processing": true,
-    "language": {
-      "processing": "DataTables is currently busy"
-    },
-    "ajax": {
-      "url": "/Item/GetItems",
-      "data": "JSON.stringify(PersonDetail)",
-      "type": "POST",
-      "datatype": "json"
-    },
-    "columns": [
+    processing: true,
+    serverSide: false,
+    ordering: true,
+    paging: true,
+    searching: true,
+    columns: [
       {
         "data": null,
         "defaultContent": "<a href='#' class='btn btn-block bg-gradient-primary btn-xs' onclick='DetailsAction(this)'>Details</a>"
@@ -88,6 +95,19 @@ function getAllMessages02() {
       { "data": "ItemName", "autoWidth": true },
       { "data": "Borrower", "autoWidth": true },
       { "data": "Lender", "autoWidth": true },
+    ],
+    ajax: {
+      "url": "/Item/GetItems",
+      "type": "GET",
+      "dataSrc": ''
+    },
+    "columnDefs": [
+      {
+        "targets": 0,
+        "visible": false
+      }
     ]
   });
 }
+
+
